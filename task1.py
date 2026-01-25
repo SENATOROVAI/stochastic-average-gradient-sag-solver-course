@@ -36,39 +36,36 @@ def sag(
 
     n, d = X.shape
 
-    # Инициализация весов
+
     if w_init is None:
         w = np.zeros(d)
     else:
         w = w_init.copy()
 
-    # Память градиентов: по одному на объект
     grad_memory = np.zeros((n, d))
 
-    # Усреднённый градиент (сумма последних градиентов)
+
     d_avg = np.zeros(d)
 
     history = []
 
     for k in range(n_iters):
-        # 1. случайно выбираем объект
+
         i = rng.integers(0, n)
 
         x_i = X[i]
         y_i = y[i]
 
-        # 2. считаем новый градиент
+
         residual = x_i @ w - y_i
         g_new = residual * x_i
 
-        # 3. обновляем средний градиент
         d_avg -= grad_memory[i]
         d_avg += g_new
 
-        # 4. обновляем память
         grad_memory[i] = g_new
 
-        # 5. шаг спуска
+    
         w -= eta * d_avg / n
 
         history.append(np.linalg.norm(w))
