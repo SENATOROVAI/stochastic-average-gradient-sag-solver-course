@@ -2,7 +2,7 @@
 
 # Stochastic Average Gradient (SAG) & SAGA Solver Course
 
-> 🚀 Professional implementation and mathematical explanation of **Stochastic Average Gradient (SAG)** and **SAGA** optimization algorithms for large-scale machine learning.
+> 🚀 Professional implementation and mathematical explanation of **Stochastic Average Gradient (SAG)** and **Stochastic Average Gradient Accelerated (SAGA)** optimization algorithms for large-scale machine learning.
 
 ---
 
