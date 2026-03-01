@@ -60,8 +60,7 @@ Example (Ridge regression):
 
 $$
 f_i(\theta)
-\frac{1}{2}(x_i^T\theta - y_i)^2
-+
+\frac{1}{2}(x_i^T\theta - y_i)^2+
 \frac{\lambda}{2}|\theta|^2
 $$
 
@@ -72,11 +71,8 @@ $$
 Standard SGD update:
 
 $$
-\theta_{k+1}
-
-
-\theta_k
-
+\theta_{k+1}=
+\theta_k+
 \eta \nabla f_{i_k}(\theta_k)
 $$
 
@@ -135,13 +131,15 @@ $$
 \theta_{k+1}
 \theta_k
 \eta
-\left(
+\left (
 \nabla f_{i_k}(\theta_k)
+\right)
 $$
 
 $$
 g_{i_k}^k
 +
+\left (
 \frac{1}{n}
 \sum_{i=1}^{n}
 g_i^k
