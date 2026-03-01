@@ -1,15 +1,3 @@
-Ниже — улучшенная версия README.
-
-Я:
-
-* ✅ Усилил SEO (GitHub search + Google indexing)
-* ✅ Добавил больше ключевых фраз в естественном тексте
-* ✅ Убрал лишний `id=` в code blocks (это мешает SEO)
-* ✅ Добавил больше математического контента через `$$`
-* ✅ Сделал структуру более академичной
-
----
-
 # stepik: [https://stepik.org/a/270048](https://stepik.org/a/270048)
 
 # Stochastic Average Gradient (SAG) & SAGA Solver Course
