@@ -1,6 +1,20 @@
-# stepik: https://stepik.org/a/270048
+Ниже — улучшенная версия README.
+
+Я:
+
+* ✅ Усилил SEO (GitHub search + Google indexing)
+* ✅ Добавил больше ключевых фраз в естественном тексте
+* ✅ Убрал лишний `id=` в code blocks (это мешает SEO)
+* ✅ Добавил больше математического контента через `$$`
+* ✅ Сделал структуру более академичной
+
+---
+
+# stepik: [https://stepik.org/a/270048](https://stepik.org/a/270048)
 
 # Stochastic Average Gradient (SAG) & SAGA Solver Course
+
+### Variance Reduction Optimization for Large-Scale Machine Learning
 
 [![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.10%2B-blue.svg)](https://www.python.org/)
@@ -8,161 +22,225 @@
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18818738.svg)](https://doi.org/10.5281/zenodo.18821191)
 
-> 🚀 Professional implementation and mathematical explanation of **Stochastic Average Gradient (SAG)** and **Stochastic Average Gradient Accelerated (SAGA)** optimization algorithms for large-scale machine learning.
+---
+
+## 🚀 About This Repository
+
+This project provides a professional and mathematically rigorous explanation of:
+
+* **Stochastic Average Gradient (SAG) algorithm**
+* **SAGA optimization algorithm**
+* Variance reduction methods
+* Large-scale convex optimization
+* Sparse machine learning solvers
+* Regularized regression optimization
+
+This repository is designed for:
+
+* Data Scientists
+* Machine Learning Engineers
+* Optimization Researchers
+* Students studying empirical risk minimization
 
 ---
 
-## 🔥 Project Overview
+# 🔎 Keywords (for GitHub search & Google indexing)
 
-This repository provides a complete course-style treatment of:
-
-- Stochastic Average Gradient (SAG)
-- SAGA algorithm
-- Variance reduction methods
-- Convergence analysis
-- Sparse optimization support
-- Python implementation from scratch
+stochastic average gradient, sag algorithm, saga optimization, variance reduction methods, convex optimization solver, sparse machine learning optimization, large scale optimization, ridge regression solver, lasso regression solver, empirical risk minimization algorithm
 
 ---
 
-## Keywords
+# 📚 Empirical Risk Minimization (ERM)
 
-```
-
-stochastic average gradient
-sag algorithm
-saga optimization
-variance reduction methods
-large scale machine learning
-sparse optimization solver
-sag python implementation
-saga solver from scratch
-convex optimization
-regularized regression optimization
-
-```
-
----
-
-## 📚 Optimization Problem
-
-We solve empirical risk minimization:
+We solve the optimization problem:
 
 $$
-\min_{\theta} \frac{1}{n} \sum_{i=1}^{n} f_i(\theta)
+\min_{\theta \in \mathbb{R}^d}
+F(\theta)
+\frac{1}{n}
+\sum_{i=1}^{n}
+f_i(\theta)
 $$
 
 Where:
 
-- $$f_i(\theta)$$ — loss for sample $$i$$
-- $$n$$ — number of training samples
-- $$\theta$$ — model parameters
+* $$\theta$$ — model parameters
+* $$n$$ — number of samples
+* $$f_i(\theta)$$ — loss of sample $$i$$
+
+Example (Ridge regression):
+
+$$
+f_i(\theta)
+\frac{1}{2}(x_i^T\theta - y_i)^2
++
+\frac{\lambda}{2}|\theta|^2
+$$
+
+---
+
+# 🔵 Stochastic Gradient Descent (Baseline)
+
+Standard SGD update:
+
+$$
+\theta_{k+1}
+
+
+\theta_k
+
+\eta \nabla f_{i_k}(\theta_k)
+$$
+
+Issues:
+
+* High gradient variance
+* Slow convergence
+* Sublinear rate
 
 ---
 
 # 🔵 Stochastic Average Gradient (SAG)
 
-Standard SGD update:
+SAG stores gradients for all samples.
+
+Let:
 
 $$
-\theta_{k+1} = \theta_k - \eta \nabla f_{i_k}(\theta_k)
+g_i^k = \text{stored gradient for sample } i
 $$
 
-SAG improves this by maintaining a memory of past gradients:
+Update rule:
 
 $$
-\theta_{k+1} =
-\theta_k -
-\eta \frac{1}{n} \sum_{i=1}^{n} g_i
+\theta_{k+1}
+\theta_k
+\eta
+\frac{1}{n}
+\sum_{i=1}^{n}
+g_i^k
 $$
 
-Where:
+At each iteration:
 
-- $$g_i$$ stores last gradient for sample $$i$$
-- Variance is reduced compared to SGD
+1. Sample index $$i_k$$
+2. Compute new gradient
+3. Replace stored gradient
+
+Key property:
+
+$$
+\frac{1}{n}\sum g_i^k
+\approx
+\nabla F(\theta_k)
+$$
+
+Variance decreases over time.
 
 ---
 
-# 🔵 SAGA Algorithm
+# 🔵 SAGA Algorithm (Unbiased Variant)
 
-SAGA corrects SAG bias and supports composite objectives:
+SAGA improves SAG by removing bias:
 
 $$
-\theta_{k+1} =
-\theta_k -
-\eta \left(
+\theta_{k+1}
+\theta_k
+\eta
+\left(
 \nabla f_{i_k}(\theta_k)
-- g_{i_k}
-+ \frac{1}{n} \sum_{i=1}^{n} g_i
+$$
+
+$$
+g_{i_k}^k
++
+\frac{1}{n}
+\sum_{i=1}^{n}
+g_i^k
 \right)
 $$
 
-Advantages:
+Properties:
 
-✅ Unbiased gradient estimator  
-✅ Supports L1 regularization  
-✅ Better theoretical guarantees  
-
----
-
-## ⚡ Why SAG and SAGA Matter
-
-Used in:
-
-- Logistic regression
-- Ridge regression
-- Lasso regression
-- Large-scale convex optimization
-- Sparse high-dimensional models
-- Industrial machine learning pipelines
-
-They provide:
-
-- Faster convergence than SGD
-- Lower variance
-- Better scalability
+* Unbiased gradient estimator
+* Supports composite objectives
+* Works with L1 regularization
+* Linear convergence for strongly convex problems
 
 ---
 
-## 🧠 Convergence Properties
+# 🧠 Convergence Theory
 
-For strongly convex functions:
+Assume:
+
+* $$F(\theta)$$ is $$\mu$$-strongly convex
+* Gradient is $$L$$-Lipschitz continuous
+
+Condition number:
 
 $$
-J(\theta) \text{ strongly convex}
+\kappa = \frac{L}{\mu}
 $$
 
-SAG and SAGA achieve:
+Then SAG / SAGA achieve:
 
 $$
-\mathcal{O}((n + \kappa)\log(1/\epsilon))
+\mathcal{O}
+\left(
+(n + \kappa)
+\log\frac{1}{\epsilon}
+\right)
 $$
 
-Where:
+Compared to SGD:
 
-- $$\kappa$$ — condition number
-- $$\epsilon$$ — target accuracy
+$$
+\mathcal{O}
+\left(
+\frac{1}{\epsilon}
+\right)
+$$
 
-This is significantly faster than standard SGD.
+This explains why variance reduction methods dominate in large-scale convex optimization.
 
 ---
 
-## 🏗 Project Structure
+# 📉 Why Variance Reduction Works
+
+SGD gradient variance:
+
+$$
+\mathrm{Var}(\nabla f_{i_k})
+$$
+
+SAG/SAGA reduce variance because:
+
+$$
+\lim_{k \to \infty}
+\mathrm{Var}
+\left(
+\frac{1}{n}\sum g_i^k
+\right)
+0
+$$
+
+This yields **linear convergence rate**.
+
+---
+
+# 🏗 Project Structure
 
 ```
-
 stochastic-average-gradient-sag-solver-course/
 │
 ├── README.md
 ├── LICENSE
-├── CITATION.cff
 ├── requirements.txt
 │
 ├── src/
 │   ├── sag.py
 │   ├── saga.py
 │   ├── loss_functions.py
-│   ├── optimizer.py
 │
 ├── examples/
 │   └── demo.py
@@ -171,22 +249,18 @@ stochastic-average-gradient-sag-solver-course/
 │   ├── theory.md
 │   ├── convergence.md
 │
-├── images/
-│   └── convergence_plot.png
-│
 └── index.html
-
-````
+```
 
 Clean structure improves:
 
-✔ Discoverability  
-✔ Academic credibility  
-✔ Portfolio strength  
+* Academic credibility
+* Search visibility
+* Portfolio quality
 
 ---
 
-## 🐍 Example — Simplified SAGA Implementation
+# 🐍 Minimal SAGA Implementation (Educational)
 
 ```python
 import numpy as np
@@ -203,7 +277,6 @@ class SAGA:
 
     def step(self):
         i = np.random.randint(0, self.n)
-
         grad = self.compute_gradient(i)
 
         self.theta -= self.lr * (
@@ -219,17 +292,17 @@ class SAGA:
         xi = self.X[i]
         yi = self.y[i]
         return xi * (xi @ self.theta - yi)
-````
+```
 
 ---
 
-## 🚀 Installation
+# 🚀 Installation
 
 ```bash
 pip install -r requirements.txt
 ```
 
-Run example:
+Run demo:
 
 ```bash
 python examples/demo.py
@@ -237,23 +310,28 @@ python examples/demo.py
 
 ---
 
-## 📊 Visualization (Recommended)
+# 📌 Applications
 
-Add:
+* Logistic regression optimization
+* Ridge regression solver
+* Lasso regression solver
+* Sparse machine learning models
+* Large-scale convex optimization
+* Industrial ML systems
 
-* Loss curve vs iterations
-* Variance comparison (SGD vs SAG vs SAGA)
-* Convergence speed comparison
+---
 
-Example:
+# 📖 Related Topics
 
-```python
-import matplotlib.pyplot as plt
+* Stochastic Gradient Descent (SGD)
+* SVRG
+* L-BFGS
+* Conjugate Gradient
+* Variance Reduction Methods
+* Convex Optimization
 
-plt.plot(loss_history)
-plt.xlabel("Iteration")
-plt.ylabel("Loss")
-plt.title("SAGA Convergence")
-plt.show()
-```
+---
 
+If you are studying **stochastic optimization algorithms for machine learning**, this repository provides both theoretical foundations and practical implementation of SAG and SAGA solvers.
+
+⭐ Star the repository if it helps your learning or research.
