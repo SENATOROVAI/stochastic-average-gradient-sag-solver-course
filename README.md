@@ -1,4 +1,4 @@
-# stepik: [https://stepik.org/a/270048](https://stepik.org/a/270048)
+#### https://SenatorovAI.com
 
 # Stochastic Average Gradient (SAG) & SAGA Solver Course
 
